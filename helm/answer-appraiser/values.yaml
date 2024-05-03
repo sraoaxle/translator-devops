@@ -107,3 +107,18 @@ resources:
   requests:
     cpu: 4000m
     memory: 10Gi
+affinity:
+  # this ensures pod only runs on node with label application=ars
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: application
+          operator: In
+          values:
+          - ars    
+tolerations:
+  - key: "transltr"
+    value: "ars"
+    operator: "Equal"
+    effect: "NoSchedule"
